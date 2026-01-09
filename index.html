@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>PianoVisualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "react/": "https://esm.sh/react@^19.2.3/",
+        "react": "https://esm.sh/react@^19.2.3",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+        "tone": "https://esm.sh/tone@14.7.77"
+      }
+    }
+    </script>
+    <style>
+      :root {
+        --bg-app: #FAFAFA;
+        --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.04);
+        
+        /* Paleta "Modern Harmony" (Tailwind 500 Series) */
+        --c-I:   #3B82F6; /* Blue 500 */
+        --c-II:  #06B6D4; /* Cyan 500 */
+        --c-III: #10B981; /* Emerald 500 */
+        --c-IV:  #F59E0B; /* Amber 500 - (Mostaza legible) */
+        --c-V:   #F97316; /* Orange 500 */
+        --c-VI:  #EC4899; /* Pink 500 */
+        --c-VII: #8B5CF6; /* Violet 500 */
+        --c-x:   #E5E7EB; /* Gray 200 */
+      }
+
+      body {
+        background-color: var(--bg-app);
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        color: #1F2937;
+        overflow-x: hidden; /* Prevent horizontal scroll on mobile */
+      }
+
+      .card-floating {
+        background: #FFFFFF;
+        border-radius: 24px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0,0,0,0.02);
+      }
+
+      .no-tap-highlight {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Custom Scrollbar for pills container if needed */
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      
+      /* Smooth transitions */
+      * {
+        transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms;
+      }
+    </style>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="antialiased selection:bg-blue-100 selection:text-blue-900">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

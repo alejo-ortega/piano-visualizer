@@ -1,0 +1,5 @@
+{
+  "name": "PianoVisualizer",
+  "description": "Una herramienta interactiva para estudiantes de música que visualiza acordes y escalas en un piano virtual.",
+  "requestFramePermissions": []
+}
