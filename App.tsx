@@ -26,6 +26,7 @@ const App: React.FC = () => {
   const [activeNotes, setActiveNotes] = useState<ActiveNote[]>([]);
   const [diatonicFormula, setDiatonicFormula] = useState<DiatonicChord[]>([]);
   const [previewNotes, setPreviewNotes] = useState<ActiveNote[] | null>(null);
+  const [expandSheet, setExpandSheet] = useState<boolean>(true);
 
   const updateVisualization = () => {
     const calculatedNotes = calculateActiveNotes(
@@ -144,12 +145,40 @@ const App: React.FC = () => {
         />
 
         <div className="w-full max-w-5xl mx-auto">
-          <SheetMusic
-            activeNotes={previewNotes || activeNotes}
-            mode={mode}
-            tonic={selectedTonic}
-            patternId={selectedPatternId}
-          />
+          <button
+            onClick={() => setExpandSheet(!expandSheet)}
+            className="w-full flex items-center justify-between px-4 py-3 bg-white rounded-t-3xl border border-b-0 border-slate-100 hover:bg-slate-50 transition-colors no-tap-highlight"
+          >
+            <span className="text-sm font-bold text-slate-700 uppercase tracking-widest">
+              Partitura
+            </span>
+            <svg
+              className={`w-5 h-5 text-slate-400 transition-transform duration-300 ${expandSheet ? "rotate-180" : ""}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          <div
+            className={`overflow-hidden transition-all duration-300 ease-out ${expandSheet ? "max-h-[500px]" : "max-h-0"}`}
+          >
+            <div className="w-full max-w-5xl mx-auto px-6 py-4 bg-white rounded-b-3xl border border-t-0 border-slate-100">
+              <SheetMusic
+                activeNotes={previewNotes || activeNotes}
+                mode={mode}
+                tonic={selectedTonic}
+                patternId={selectedPatternId}
+              />
+            </div>
+          </div>
         </div>
 
         <div className="w-full max-w-5xl mx-auto flex flex-col items-center min-h-[60px]">

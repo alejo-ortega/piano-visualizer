@@ -109,9 +109,9 @@ const SheetMusic: React.FC<SheetMusicProps> = ({
         // SCALE LOGIC: Sequential Notes
         const noteLower = n.note.toLowerCase();
 
-        // Treble Note
+        // Treble Note (1 octave higher)
         const tNoteStruct = keyManagerTreble.selectNote(noteLower);
-        const tKey = `${tNoteStruct.note}/${n.octave}`;
+        const tKey = `${tNoteStruct.note}/${n.octave + 1}`;
 
         const tNote = new VF.StaveNote({
           clef: "treble",
@@ -123,9 +123,9 @@ const SheetMusic: React.FC<SheetMusicProps> = ({
         // Do not add extra accidentals; rely on key signature only
         trebleNotes.push(tNote);
 
-        // Bass Note (Mirrored 1 octave down)
+        // Bass Note (Mirrored 1 octave down from treble)
         const bNoteStruct = keyManagerBass.selectNote(noteLower);
-        const bKey = `${bNoteStruct.note}/${n.octave - 1}`;
+        const bKey = `${bNoteStruct.note}/${n.octave}`;
 
         const bNote = new VF.StaveNote({
           clef: "bass",
@@ -150,13 +150,13 @@ const SheetMusic: React.FC<SheetMusicProps> = ({
       sortedNotes.forEach((n, i) => {
         const noteLower = n.note.toLowerCase();
 
-        // Treble Staff
+        // Treble Staff (1 octave higher)
         const tRes = kmT.selectNote(noteLower);
-        tKeys.push(`${tRes.note}/${n.octave}`);
+        tKeys.push(`${tRes.note}/${n.octave + 1}`);
 
-        // Bass Staff: Mirror the chord 1 octave lower
+        // Bass Staff: Mirror the chord 1 octave lower from treble
         const bRes = kmB.selectNote(noteLower);
-        bKeys.push(`${bRes.note}/${n.octave - 1}`);
+        bKeys.push(`${bRes.note}/${n.octave}`);
       });
 
       if (tKeys.length > 0) {

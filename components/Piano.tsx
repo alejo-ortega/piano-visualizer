@@ -39,6 +39,53 @@ const Piano: React.FC<PianoProps> = ({ tonic, activeNotes }) => {
     return unsubscribe;
   }, [pressKey, releaseKey]);
 
+  // Keyboard mapping: A-S-D-F-G-H-J for white keys, W-E-T-Y-U for black keys
+  const keyboardMap: { [key: string]: string } = {
+    a: "C3",
+    s: "D3",
+    d: "E3",
+    f: "F3",
+    g: "G3",
+    h: "A3",
+    j: "B3",
+    w: "C#3",
+    e: "D#3",
+    t: "F#3",
+    y: "G#3",
+    u: "A#3",
+  };
+
+  // Keyboard event listeners
+  useEffect(() => {
+    const handleKeyDown = (ev: KeyboardEvent) => {
+      const key = ev.key.toLowerCase();
+      const toneNote = keyboardMap[key];
+
+      if (!toneNote) return;
+
+      ev.preventDefault();
+      pressKey(toneNote);
+      playTone(toneNote);
+    };
+
+    const handleKeyUp = (ev: KeyboardEvent) => {
+      const key = ev.key.toLowerCase();
+      const toneNote = keyboardMap[key];
+
+      if (!toneNote) return;
+
+      releaseKey(toneNote);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [pressKey, releaseKey, keyboardMap]);
+
   // Updated Range: C3 to C5 (2 full octaves + 1 note) to show bass clef notes properly
   const keys = useMemo(() => generatePianoKeys(3, 4), []);
   // Note: generatePianoKeys(3, 4) generates C3...B4. That's good enough for Bass/Treble split around C4.
