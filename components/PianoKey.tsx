@@ -88,11 +88,9 @@ const PianoKey: React.FC<PianoKeyProps> = ({
           <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent rounded-b-[20px] pointer-events-none"></div>
         )}
 
-        {isActive && (
-          <span className="text-[9px] text-slate-800 font-bold opacity-90 pointer-events-none">
-            {activeData?.note ?? keyData.note}
-          </span>
-        )}
+        <span className="text-[9px] text-white font-bold opacity-50 pointer-events-none">
+          {activeData?.note ?? keyData.note}
+        </span>
       </div>
     );
   }

@@ -37,32 +37,68 @@ const Controls: React.FC<ControlsProps> = ({
 
   return (
     <div className="w-full max-w-5xl mx-auto flex flex-col lg:flex-row gap-6 items-start justify-between mb-2">
-      {/* LEFT: Matrix Card */}
+      {/* LEFT: Piano Keyboard Card */}
       <div className="w-full lg:flex-1 card-floating p-6">
         <label className="block text-slate-400 text-xs font-bold uppercase tracking-widest mb-4">
           Nota Tónica
         </label>
-        <div className="grid grid-cols-4 sm:grid-cols-6 gap-3">
-          {CHROMATIC_SCALE.map((note) => {
-            const isActive = selectedTonic === note;
-            return (
-              <button
-                key={note}
-                onClick={() => setSelectedTonic(note)}
-                className={`
-                          h-10 w-full rounded-xl text-sm font-semibold transition-all duration-300
-                          flex items-center justify-center no-tap-highlight
-                          ${
-                            isActive
-                              ? "bg-[#2D3436] text-white shadow-lg shadow-black/10 transform scale-105"
-                              : "bg-slate-50 text-slate-500 hover:bg-slate-100"
-                          }
-                      `}
-              >
-                {note}
-              </button>
-            );
-          })}
+        <div className="relative flex justify-center">
+          <div className="relative w-full h-40 bg-white rounded-b-3xl shadow-lg border border-slate-100 p-1 overflow-hidden">
+            {/* White Keys */}
+            <div className="flex justify-between h-full gap-0.5">
+              {(["C", "D", "E", "F", "G", "A", "B"] as NoteName[]).map(
+                (note) => {
+                  const isActive = selectedTonic === note;
+                  return (
+                    <button
+                      key={note}
+                      onClick={() => setSelectedTonic(note)}
+                      className={`
+                      flex-1 rounded-b-2xl transition-all duration-200 ease-out
+                      flex items-end justify-center pb-3 cursor-pointer
+                      active:scale-y-[0.98] origin-top no-tap-highlight
+                      ${isActive ? "bg-gradient-to-b from-cyan-300 to-blue-400 text-slate-900 shadow-lg shadow-cyan-300/70" : "bg-white text-slate-300 hover:bg-slate-50 shadow-sm"}
+                    `}
+                    >
+                      <span className="text-xs font-bold">{note}</span>
+                    </button>
+                  );
+                },
+              )}
+            </div>
+
+            {/* Black Keys */}
+            <div className="absolute inset-0 pointer-events-none">
+              {(
+                [
+                  { note: "C#" as NoteName, left: "7.14%" },
+                  { note: "D#" as NoteName, left: "21.43%" },
+                  { note: "F#" as NoteName, left: "50%" },
+                  { note: "G#" as NoteName, left: "64.29%" },
+                  { note: "A#" as NoteName, left: "78.57%" },
+                ] as const
+              ).map(({ note, left }) => {
+                const isActive = selectedTonic === note;
+                return (
+                  <button
+                    key={note}
+                    onClick={() => setSelectedTonic(note)}
+                    className={`
+                      absolute top-0 h-[65%] w-[5.5%] rounded-b-lg transition-all duration-200 ease-out
+                      flex items-end justify-center pb-1.5 cursor-pointer
+                      active:scale-y-[0.96] origin-top no-tap-highlight pointer-events-auto z-10
+                      ${isActive ? "bg-gradient-to-b from-cyan-400 to-blue-500 text-white shadow-lg shadow-cyan-400/70" : "bg-slate-800 text-white shadow-md shadow-slate-900/50 hover:bg-slate-700"}
+                    `}
+                    style={{ left, transform: "translateX(-50%)" }}
+                  >
+                    <span className="text-[9px] font-bold opacity-50">
+                      {note}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
 
